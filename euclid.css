@@ -1,0 +1,134 @@
+*
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1em;
+}
+
+nav, aside, section, article, figure, figcaption, footer
+{
+	display: block;
+}
+
+html, body
+{
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#content
+{
+	border: 1px solid #CCCCCC;
+	border-radius: 0.5em;
+	box-sizing: border-box;
+	height: 720px;
+	margin: 0 auto;
+	padding: 1em;
+	position: relative;
+	width: 920px;
+}
+
+canvas
+{
+	background: #FFFFFF url("grid.png") repeat;
+	border: 1px solid #CCCCCC;
+	border-radius: 0.5em;
+	margin: 0;
+	padding: 0;
+}
+
+#controls
+{
+	box-sizing: border-box;
+	float: right;
+	height: 100%;
+	padding-left: 1em;
+	width: 178px;
+}
+
+#controls ul
+{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#controls ul li
+{
+	border: 1px solid #CCCCCC;
+}
+
+#controls ul li:first-child
+{
+	border-top-left-radius: 0.4em;
+	border-top-right-radius: 0.4em;
+}
+
+#controls ul li:not(:last-child)
+{
+	border-bottom: none;
+}
+
+#controls ul li:last-child
+{
+	border-bottom-left-radius: 0.4em;
+	border-bottom-right-radius: 0.4em;
+}
+
+#controls ul li .label
+{
+	background-color: #AAAAAA;
+	cursor: pointer;
+	display: block;
+	padding: 6px 8px;
+	text-decoration: underline;
+}
+
+#controls ul li:first-child .label
+{
+	border-top-left-radius: 0.4em;
+	border-top-right-radius: 0.4em;
+}
+
+#controls ul li:last-child .label:not(.selected)
+{
+	border-bottom-left-radius: 0.4em;
+	border-bottom-right-radius: 0.4em;
+}
+
+#controls ul li .control-group
+{
+	padding: 6px;
+}
+
+#controls ul li .control-group button
+{
+	background-color: #AAAAAA;
+	border: 1px solid #CCCCCC;
+	border-radius: 0.4em;
+	cursor: pointer;
+	display: block;
+	margin: 2px auto;
+	padding: 6px;
+}
+
+#controls ul li .control-group button:first-child
+{
+	margin-top: 0;
+}
+
+#controls ul li .control-group button:last-child
+{
+	margin-bottom: 0;
+}
+
+#controls ul li button:hover
+{
+	background-color: #CCCCCC;
+	border-color: #AAAAAA;
+}
+
+.hidden
+{
+	display: none;
+}

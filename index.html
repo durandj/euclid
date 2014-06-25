@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Euclid</title>
+
+		<meta charset="UTF-8" />
+
+		<link rel="Stylesheet" href="euclid.css" />
+	</head>
+	<body>
+		<div id="content">
+			<canvas></canvas>
+			<div id="controls">
+				<ul>
+					<li>
+						<a class="label">Point</a>
+						<div class="control-group">
+							<button onclick="setMode('point')">Place Point</button>
+						</div>
+					</li>
+					<li>
+						<a class="label">Line</a>
+						<div class="control-group">
+							<button>Point to Point</button>
+							<button>On Point</button>
+							<button>Horizontal</button>
+							<button>Vertical</button>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="jcanvas.min.js"></script>
+		<script type="text/javascript" src="euclid.js"></script>
+
+		<script type="text/javascript">
+			$(window).resize(function () {
+				var windowHeight = $(window).height();
+				var content      = $('#content');
+
+				content.css('top', (windowHeight - content.height()) / 3);
+
+				$('canvas').attr('height', '684').attr('width', '702');
+			}).resize();
+
+			$('div#controls ul li a.label').each(function () {
+				var label        = $(this);
+				var controlGroup = label.next();
+
+				controlGroup.addClass('hidden');
+			}).click(function () {
+				$(this).toggleClass('selected').next().toggleClass('hidden');
+			});
+
+			$('canvas').click(function () {
+				setMode();
+			});
+
+			function getMousePosFromEvent(event) {
+				var x = event.offsetX;
+				var y = event.offsetY;
+
+				return new Point(x, y);
+			}
+
+			function setMode(mode) {
+				var canvas = $('canvas').css('cursor', 'crosshair');
+
+				if (mode == 'point') {
+					canvas.one('click', function (event) {
+						var point = getMousePosFromEvent(event);
+						drawPoint(canvas, point);
+					});
+				}
+				else {
+					canvas.css('cursor', '');
+				}
+			}
+		</script>
+	</body>
+</html>
