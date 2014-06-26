@@ -21,7 +21,7 @@
 					<li>
 						<a class="label">Line</a>
 						<div class="control-group">
-							<button>Point to Point</button>
+							<button onclick="setMode('line-point_to_point')">Point to Point</button>
 							<button>On Point</button>
 							<button>Horizontal</button>
 							<button>Vertical</button>
@@ -36,6 +36,9 @@
 		<script type="text/javascript" src="euclid.js"></script>
 
 		<script type="text/javascript">
+			var drawStack  = [];
+			var pointStack = [];
+
 			$(window).resize(function () {
 				var windowHeight = $(window).height();
 				var content      = $('#content');
@@ -54,15 +57,19 @@
 				$(this).toggleClass('selected').next().toggleClass('hidden');
 			});
 
-			$('canvas').click(function () {
-				setMode();
-			});
-
 			function getMousePosFromEvent(event) {
 				var x = event.offsetX;
 				var y = event.offsetY;
 
 				return new Point(x, y);
+			}
+
+			function redrawCanvas(canvas) {
+				canvas.clearCanvas();
+
+				drawStack.forEach(function (shape) {
+					shape.draw(canvas);
+				});
 			}
 
 			function setMode(mode) {
@@ -71,11 +78,38 @@
 				if (mode == 'point') {
 					canvas.one('click', function (event) {
 						var point = getMousePosFromEvent(event);
-						drawPoint(canvas, point);
+						drawStack.push(new Shape('point', point));
+						setMode();
+						redrawCanvas(canvas);
 					});
+				}
+				else if (mode == 'line-point_to_point') {
+					canvas.one('click', handlerLinePointToPoint);
 				}
 				else {
 					canvas.css('cursor', '');
+				}
+			}
+
+			function handlerLinePointToPoint(event) {
+				var canvas = $(event.target);
+				var point  = getMousePosFromEvent(event);
+
+				if (pointStack.length === 0) {
+					drawStack.push(new Shape('point', point));
+					pointStack.push(point);
+
+					canvas.one('click', handlerLinePointToPoint);
+					redrawCanvas(canvas);
+				}
+				else {
+					drawStack.pop();
+
+					var p0 = pointStack.pop();
+					drawStack.push(new Shape('line_point_to_point', [p0, point]));
+
+					setMode();
+					redrawCanvas(canvas);
 				}
 			}
 		</script>
